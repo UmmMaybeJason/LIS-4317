@@ -11,5 +11,15 @@ plot <- ggplot(data, aes(x = names, y = snipes, fill = snipes)) +
   labs(title = "Dance Team Snipes", x = "Name", y = "Snipes") +
   scale_fill_gradient(low = "blue", high = "black")
 
+# Code that does NOT use "ggplot2" package
+
+barplot(data$snipes, 
+        names.arg = data$names, 
+        col = colors, 
+        horiz = TRUE, 
+        main = "Dance Team Snipes", 
+        xlab = "Snipes", 
+        ylab = "Name")
+
 
 print(plot)
