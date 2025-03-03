@@ -1,20 +1,17 @@
 # Module 7
-library("ggplot2")
-library("dplyr")
+data(mtcars)
 
-honda_toyota <- mtcars %>%
-  filter(brand == "Honda" | brand == "Toyota") %>%
-  group_by(brand) %>%
-  summarise(avg_mpg = mean(mpg, na.rm = TRUE))
+random_cars <- mtcars %>%
+  sample_n(10)
 
-mtcars$brand <- rownames(mtcars)
+random_cars_df <- data.frame(
+  car = rownames(random_cars),
+  mpg = random_cars$mpg
+)
 
-honda_toyota <- mtcars[mtcars$brand %in% c("Honda Civic", "Honda Accord", "Toyota Corolla", "Toyota Camry"), ]
+random_cars_df$car <- factor(random_cars_df$car)
 
-avg_mpg <- aggregate(mpg ~ brand, data = honda_toyota, FUN = mean)
-
-ggplot(avg_mpg, aes(x = brand, y = mpg, fill = brand)) +
-  geom_bar(stat = "identity") +
-  labs(title = "Average MPG of Honda vs Toyota Cars",
-       x = "Car Brand",
-       y = "Average MPG")
+ggplot(random_cars_df, aes(x = car, y = mpg)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  labs(title = "MPG for 10 Random Cars from mtcars") +
+  theme(axis.text.x = element_text(angle = 90))
